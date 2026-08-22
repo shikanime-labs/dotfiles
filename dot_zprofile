@@ -1,0 +1,7 @@
+eval "$(/usr/local/bin/brew shellenv)"
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# MacPorts PATH additions
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"

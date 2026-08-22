@@ -1,0 +1,5 @@
+# Minimal zshrc — no optional tools installed
+export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$HOME/.rd/bin:$HOME/Library/pnpm/biny:$PATH
+
+# Direnv hook
+eval "$(direnv hook zsh)"

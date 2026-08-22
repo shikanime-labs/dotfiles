@@ -1,0 +1,18 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Shikanime"
+email = "shikanime@shikanime.studio"
+
+[git]
+push-bookmarks = ["shikanime/*"]
+sign-on-push = false
+
+[signing]
+behavior = "drop"
+backend = "gpg"
+key = "CC5194913CAEB5F5"
+
+[signing.backends.gpg]
+extra-args = ["--pinentry-mode","loopback","--batch","--no-tty"]
+program = "gpg"
