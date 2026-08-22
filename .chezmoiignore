@@ -178,3 +178,6 @@ dot_config/sops/age/
 # This repo
 .jj/
 .git/
+
+# Age private key — never commit; back up out of band
+dot_config/sops/
