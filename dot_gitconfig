@@ -15,6 +15,7 @@
 	process = git-lfs filter-process
 	required = true
 [safe]
+	directory = D:\\Source
 	directory = %(prefix)///wsl.localhost/Ubuntu/home/shika/Source
 	directory = E:\\Datasets\\bitstamp
 [core]

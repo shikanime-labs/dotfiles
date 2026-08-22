@@ -1,36 +1,44 @@
 # Dotfiles
 
-Personal dotfiles and system configurations managed via Nix and chezmoi.
-
-**Language:** Nix
+Shikanime personal dotfiles, managed by chezmoi. (Note: this repo is NOT the
+Nix `home/`+`hosts/` project the old Stack Workflow section described — that
+text was removed.)
 
 ## Structure
 
-- `home/` — Home-manager modules
-- `hosts/` — Host-specific NixOS configurations
-- `modules/` — Shared Nix modules
+- `dot_*` / `private_dot_*` — chezmoi-managed dotfiles (ssh, jj, git, hermes…)
+- `.chezmoihooks/` — sops decrypt/re-encrypt hooks
+- `.chezmoiignore` — deploy-time excludes (state, OS junk, age private key)
+- `README.md` — quick start + the chezmoi+sops secrets workflow
 
 ## Commit Style
 
-- Plain-text capitalized title, no conventional-commit prefix
-- Body with labels: `Design:`, `Related:`, `Closes #`
-- Keep Markdown lines wrapped at 80 columns and run `nix fmt` before shipping
+- Plain-text capitalized title, no conventional-commit prefix.
+- Keep Markdown wrapped at 80 columns.
 
-## Stack Workflow
+## PR Workflow (plain `gh pr`, NOT `gh stack`)
 
-- Install the official GitHub extension once:
-  `gh extension install github/gh-stack` (requires GitHub CLI ≥ 2.0; `gh stack`
-  is in public preview and may change).
-- Keep one logical change per PR; split large work into a stack of PRs.
-- Create a stack: `gh stack init`, then `gh stack add` for each new branch, and
-  commit on the active branch. `gh stack view` lists the stack.
-- Submit/update: `gh stack submit` (add `--open` to open PRs, `--auto` to skip
-  prompts). Resubmit after each change to refresh titles, bodies, and branches.
-- Pull down an existing stack: `gh stack checkout <PR_NUMBER>` (also accepts a
-  stack number, PR URL, or branch name).
-- Rebase onto updated trunk: `gh stack rebase` (cascading), then
-  `gh stack submit`.
-- Land a stack: `gh stack merge` (interactive) or
-  `gh stack merge <PR_NUMBER> --yes --squash` to merge up to a PR.
-- Never `gh pr merge` on a stacked PR — only `gh stack merge` lands stacks.
-- Never force-push stack branches; `gh stack` owns the branch pointers.
+The org removed `gh stack` / `ghstack` entirely. Land changes with plain
+GitHub PRs:
+
+- Branch off `main`: `feat/…`, `fix/…`, or `<owner>/<short-desc>` when a
+  repo ruleset constrains naming.
+- Push to `origin`, then:
+  ```sh
+  gh pr create --repo shikanime-labs/dotfiles --head shikanime-labs:<branch> --base main
+  ```
+- Keep one logical change per PR.
+- `main` requires **signed commits** (ruleset `required_signatures`). Sign with
+  an SSH or GPG key registered as a GitHub signing key:
+  ```sh
+  git config gpg.format ssh
+  git config user.signingkey ~/.ssh/id_ed25519.pub
+  git config gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
+  ```
+- Close the PR deliberately after merge; do not rely on auto-close keywords.
+
+## Secrets
+
+Secrets are encrypted with `sops` (age) and decrypted by chezmoi hooks at apply
+time. See `README.md` "Secrets (chezmoi + sops)". Never commit private key
+material (age key, SSH private keys, GPG private keys).
