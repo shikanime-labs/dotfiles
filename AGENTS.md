@@ -25,7 +25,8 @@ GitHub PRs:
   repo ruleset constrains naming.
 - Push to `origin`, then:
   ```sh
-  gh pr create --repo shikanime-labs/dotfiles --head shikanime-labs:<branch> --base main
+  gh pr create --repo shikanime-labs/dotfiles \
+    --head shikanime-labs:<branch> --base main
   ```
 - Keep one logical change per PR.
 - `main` requires **signed commits** (ruleset `required_signatures`). Sign with
