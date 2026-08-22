@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# chezmoi pre-apply hook: decrypt any *.sops.* files in the source dir in place
+# so that chezmoi's normal apply step deploys the plaintext to the target.
+# Mirrors chezmoi's documented sops integration, which shells out to `sops`.
+#
+# key location note (Windows): the sops binary resolves ~/.config via
+# %APPDATA%, not the MSYS $HOME. Pass the native path explicitly.
+set -euo pipefail
+
+KEY_FILE="${SOPS_AGE_KEY_FILE:-C:/Users/shika/.config/sops/age/keys.txt}"
+export SOPS_AGE_KEY_FILE="$KEY_FILE"
+
+mapfile -t SOPS_FILES < <(find "$SOURCE_DIR" -type f -name '*.sops.*' 2>/dev/null || true)
+if [ "${#SOPS_FILES[@]}" -eq 0 ]; then
+  exit 0
+fi
+
+for f in "${SOPS_FILES[@]}"; do
+  decrypted="$(sops -d "$f")"
+  # overwrite the source .sops.* file with its plaintext for chezmoi to deploy
+  printf '%s\n' "$decrypted" > "$f"
+done
