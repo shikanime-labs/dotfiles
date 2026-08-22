@@ -9,10 +9,6 @@ push-bookmarks = ["shikanime/*"]
 sign-on-push = false
 
 [signing]
-behavior = "drop"
-backend = "gpg"
-key = "CC5194913CAEB5F5"
-
-[signing.backends.gpg]
-extra-args = ["--pinentry-mode","loopback","--batch","--no-tty"]
-program = "gpg"
+behavior = "own"
+backend = "ssh"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDsUrtJU0kAg39S6Is4hOhiCIbZusi7/MHAvLYY0M7L3"
