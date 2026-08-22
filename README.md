@@ -18,6 +18,14 @@ chezmoi init --apply <repo>
   - `config.yaml` -- full hermes config (no secrets)
   - `SOUL.md.tmpl` -- host-specific SOUL (template)
   - `env.tmpl` -- secrets template (chezmoi `{{ env }}`)
+- `dot_gitconfig.tmpl` -- git config (SSH commit signing; host-portable via `{{ .chezmoi.homeDir }}`)
+- `dot_bash_profile` -- bash login env (brew shellenv)
+- `dot_zprofile` -- zsh **login** env (brew + `~/.local/bin` + MacPorts PATH)
+- `dot_zshrc` -- zsh **interactive** env (cargo/rd/pnpm PATH + direnv hook)
+- `private_dot_jj/config.toml` -- jj config (ssh signing backend)
+- `private_dot_codex/config.toml` -- Codex config
+- `dot_config/jj/config.toml` -- jj config (XDG path, ssh signing; kaltashar/macOS)
+- `dot_config/nix/nix.conf` -- nix `experimental-features = nix-command flakes`
 - `.chezmoitemplates/` -- shared template fragments
   - `soul-telsha.md` -- Operator 21O (Telsha)
   - `soul-ishtar.md` -- Operator 17O (Ishtar)
@@ -34,6 +42,22 @@ chezmoi init --apply <repo>
 | ishtar    | 17O      | The Flight-Bay Analyst (ESFJ) |
 | kaltashar | 11O      | The Logistics Anchor (ISTJ)   |
 
+## Shell config: zprofile vs zshrc split
+
+The split follows zsh's own execution model, not a preference:
+
+- `dot_zprofile` -- runs **once per login shell** (`zsh -l`, SSH, terminal
+  launch). Sets the base environment that every subsequent shell inherits:
+  `brew shellenv`, `~/.local/bin`, and the MacPorts `/opt/local` PATH. Declared
+  here exactly once so the PATH is not re-prepended on every interactive prompt.
+- `dot_zshrc` -- runs **per interactive shell** (each new prompt/tab). Holds
+  shell-session tooling that must re-evaluate per shell: the `cargo`/`rd`/`pnpm`
+  PATH additions and the `direnv` hook.
+
+Keeping login-only setup out of `.zshrc` avoids duplicate PATH entries and
+re-running `brew shellenv` on every prompt. `.bash_profile` mirrors the
+`.zprofile` role for bash login shells.
+
 ## Secrets (chezmoi + sops)
 
 Secrets are encrypted with `sops` (age backend) and decrypted by chezmoi
@@ -41,6 +65,25 @@ hooks at apply time. chezmoi 2.72.0 has no native `.sops` auto-decryption, so
 `.chezmoihooks/sops-decrypt-on-apply` and `.chezmoihooks/sops-reencrypt-post-apply`
 shell out to `sops` to decrypt `.sops.*` files before deploy and re-encrypt
 afterwards. The repo only ever holds ciphertext.
+
+### Why sops-hooks instead of chezmoi's native age backend
+
+chezmoi 2.72.0 only wires `encryption = "age"` (chezmoi-native) and `gpg`; it
+has **no** `encryption = "sops"` option. Two valid ways to manage sops
+ciphertext in chezmoi:
+
+1. **sops-hooks (this repo's choice)** -- keep `.sops.*` files encrypted with
+   the `sops` binary and let `.chezmoihooks/` shell out to `sops -d` on apply.
+   Pros: reuses the existing `.sops.yaml` age recipient and the verified
+   sops+age key chain; no change to the committed ciphertext format.
+2. **chezmoi-native age** -- switch to `encryption = "age"` and let chezmoi
+   own the age key (`~/.config/sops/age/keys.txt`). Pros: no `sops` binary at
+   apply time. Cons: requires re-encrypting every secret under chezmoi's age
+   format and dropping the `.sops.yaml` recipient -- a migration, not a config
+   toggle.
+
+We stay on sops-hooks to avoid re-encrypting committed secrets; the age key
+material is identical either way.
 
 ### One-time local setup (per machine, NOT committed)
 
