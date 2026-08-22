@@ -64,6 +64,13 @@ dot_hermes/.env
 .DS_Store
 Thumbs.db
 
+# Age private key — never commit; back up out of band
+dot_config/sops/age/
+
+# OS
+.DS_Store
+Thumbs.db
+
 # This repo
 .jj/
 .git/

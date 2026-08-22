@@ -1,0 +1,27 @@
+[credential "https://huggingface.co"]
+	provider = generic
+[user]
+	email = 22115108+shikanime@users.noreply.github.com
+	name = Shikanime Deva
+	signingkey = EA3CE20AC83A347C
+[credential]
+	helper =
+	helper = C:/Users/shika/scoop/apps/git-credential-manager/current/git-credential-manager.exe
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[safe]
+	directory = %(prefix)///wsl.localhost/Ubuntu/home/shika/Source
+	directory = E:\\Datasets\\bitstamp
+[core]
+	autocrlf = false
+[safe]
+	directory = *
+[windows]
+	appendAtomically = false
+[commit]
+	gpgsign = true

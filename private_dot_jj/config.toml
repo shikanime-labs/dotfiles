@@ -1,3 +1,5 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
 [operation]
 mode = "snapshot"
 auto-update-interval = "7d"
@@ -7,8 +9,9 @@ name = "William Phetsinorath"
 email = "william.phetsinorath@shikanime.studio"
 
 [signing]
-backend = "gpg"
-key = "EA3CE20AC83A347C"
+backend = "ssh"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPFC5VCX4U04t82TizoUmXxZ064cOqNtswe0zPDqWWRj"
+behaviour = "own"
 
 [ui]
 default-command = "log"
