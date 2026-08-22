@@ -2,6 +2,55 @@ Host localhost
   HostName localhost
   User shika
 
-Host nixtar.taila659a.ts.net
+# --- shikanime-labs/machines hosts ---
+Host telsha
+  User shika
+  HostName telsha
+
+Host ishtar
+  User shika
+  HostName ishtar
+
+Host kaltashar
+  User shika
+  HostName kaltashar
+
+Host kushira
+  User shika
+  HostName kushira.taila659a.ts.net
+
+Host sashina
+  User shika
+  HostName sashina.taila659a.ts.net
+
+Host nixtar
   User shika
   HostName nixtar.taila659a.ts.net
+
+Host ashira
+  User shika
+  HostName ashira.taila659a.ts.net
+
+Host catbox
+  User shika
+  HostName catbox
+
+Host fushi
+  User shika
+  HostName fushi.taila659a.ts.net
+
+Host manash
+  User shika
+  HostName manash.taila659a.ts.net
+
+Host minish
+  User shika
+  HostName minish.taila659a.ts.net
+
+Host nalsha
+  User shika
+  HostName nalsha.taila659a.ts.net
+
+Host nemishi
+  User shika
+  HostName nemishi.taila659a.ts.net
