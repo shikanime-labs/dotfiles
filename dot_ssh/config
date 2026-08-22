@@ -1,0 +1,7 @@
+Host localhost
+  HostName localhost
+  User shika
+
+Host nixtar.taila659a.ts.net
+  User shika
+  HostName nixtar.taila659a.ts.net

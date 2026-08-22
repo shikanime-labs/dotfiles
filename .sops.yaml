@@ -1,0 +1,10 @@
+# SOPS config for chezmoi-managed secrets in this repo.
+# chezmoi decrypts any file whose name contains `.sops.` using the `sops` binary
+# (age backend). The matching private age key lives ONLY at
+# ~/.config/sops/age/keys.txt and is never committed.
+#
+# On Windows the sops binary does not resolve ~/.config; set the env var before
+# any sops/chezmoi invocation:
+#   export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+creation_rules:
+  - age: age1m2z62rwhkldycej2ljggv9zfgp79xzzhdvkv7z8ajfhkrepxyvxsr3pgea
