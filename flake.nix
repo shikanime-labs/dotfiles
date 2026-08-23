@@ -73,6 +73,19 @@
             devlib.devenvModules.shell
             devlib.devenvModules.shikanime
           ];
+          sops = {
+            enable = true;
+            settings = {
+              creation_rules = [
+                {
+                  age = [
+                    "age1m2z62rwhkldycej2ljggv9zfgp79xzzhdvkv7z8ajfhkrepxyvxsr3pgea"
+                    "age1pwl9yz4k4255a4h8qz7lafce8wxhsul0cnqwmr8528fqgujlfshshv3z3g"
+                  ];
+                }
+              ];
+            };
+          };
           packages = with pkgs; [
             chezmoi
           ];
