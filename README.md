@@ -19,8 +19,8 @@ chezmoi init --apply <repo>
   - `SOUL.md.tmpl` -- host-specific SOUL (template)
   - `env.tmpl` -- secrets template (chezmoi `{{ env }}`)
 - `dot_gitconfig.tmpl` -- git config (SSH commit signing; host-portable via `{{ .chezmoi.homeDir }}`)
-- `dot_bash_profile` -- bash login env (brew shellenv)
-- `dot_zprofile` -- zsh **login** env (brew + `~/.local/bin` + MacPorts PATH)
+- `dot_bash_profile.tmpl` -- bash login env (Apple Silicon brew shellenv)
+- `dot_zprofile.tmpl` -- zsh **login** env (Apple Silicon brew shellenv + `~/.local/bin` + MacPorts PATH)
 - `dot_zshrc` -- zsh **interactive** env (cargo/rd/pnpm PATH + direnv hook)
 - `private_dot_jj/config.toml` -- jj config (ssh signing backend)
 - `private_dot_codex/config.toml` -- Codex config
@@ -48,15 +48,16 @@ The split follows zsh's own execution model, not a preference:
 
 - `dot_zprofile` -- runs **once per login shell** (`zsh -l`, SSH, terminal
   launch). Sets the base environment that every subsequent shell inherits:
-  `brew shellenv`, `~/.local/bin`, and the MacPorts `/opt/local` PATH. Declared
-  here exactly once so the PATH is not re-prepended on every interactive prompt.
+  `~/.local/bin`, and the MacPorts `/opt/local` PATH. Declared here exactly once
+  so the PATH is not re-prepended on every interactive prompt. On Apple Silicon the
+  brew shellenv is sourced here; Intel Macs no longer set brew PATH (brew is
+  deprecated there).
 - `dot_zshrc` -- runs **per interactive shell** (each new prompt/tab). Holds
   shell-session tooling that must re-evaluate per shell: the `cargo`/`rd`/`pnpm`
   PATH additions and the `direnv` hook.
 
-Keeping login-only setup out of `.zshrc` avoids duplicate PATH entries and
-re-running `brew shellenv` on every prompt. `.bash_profile` mirrors the
-`.zprofile` role for bash login shells.
+Keeping login-only setup out of `.zshrc` avoids duplicate PATH entries.
+`.bash_profile` mirrors the `.zprofile` role for bash login shells.
 
 ## Secrets (chezmoi + sops)
 

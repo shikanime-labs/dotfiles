@@ -1,7 +1,11 @@
-eval "$(/usr/local/bin/brew shellenv)"
+{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.arch "arm64" }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{- end }}
 
 # Hermes Agent — ensure ~/.local/bin is on PATH
 export PATH="$HOME/.local/bin:$PATH"
 
 # MacPorts PATH additions
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+{{- end }}

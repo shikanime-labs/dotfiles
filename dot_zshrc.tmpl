@@ -1,5 +1,7 @@
+{{- if eq .chezmoi.os "darwin" -}}
 # Minimal zshrc — no optional tools installed
 export PATH=$HOME/.cargo/bin:$HOME/.rd/bin:$HOME/Library/pnpm/bin:$PATH
 
 # Direnv hook
 eval "$(direnv hook zsh)"
+{{- end -}}
