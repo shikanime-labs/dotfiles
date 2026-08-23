@@ -1,10 +1,40 @@
+{{- if eq .chezmoi.os "windows" -}}
 [user]
-	signingkey = {{ .chezmoi.homeDir }}/.ssh/id_ed25519.pub
+	name = Shikanime Deva
+	email = 22115108+shikanime@users.noreply.github.com
+	signingkey = EA3CE20AC83A347C
+[credential "https://huggingface.co"]
+	provider = generic
+[credential]
+	helper =
+	helper = C:/Users/shika/scoop/apps/git-credential-manager/current/git-credential-manager.exe
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[safe]
+	directory = D:\Source
+[core]
+	autocrlf = false
+[safe]
+	directory = *
+[windows]
+	appendAtomically = false
+[commit]
+	gpgsign = true
+{{- else -}}
+# macOS / Linux — SSH commit signing
+[user]
 	name = William Phetsinorath
 	email = william.phetsinorath@shikanime.studio
+	signingkey = {{ .chezmoi.homeDir }}/.ssh/id_ed25519.pub
 [commit]
 	gpgsign = true
 [gpg]
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowed_signers
+{{- end -}}
