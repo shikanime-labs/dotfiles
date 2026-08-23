@@ -6,5 +6,16 @@
 # On Windows the sops binary does not resolve ~/.config; set the env var before
 # any sops/chezmoi invocation:
 #   export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+#
+# Host-scoped recipients:
+#   - a secret source file whose path contains "kaltashar/" is encrypted to
+#     kaltashar's age key (so only kaltashar can decrypt its own secrets).
+#   - a secret source file whose path contains "telsha/" is encrypted to
+#     telsha's age key (so only telsha can decrypt its own secrets).
+#   - every other file falls back to telsha's key as a safety net.
 creation_rules:
-  - age: age1m2z62rwhkldycej2ljggv9zfgp79xzzhdvkv7z8ajfhkrepxyvxsr3pgea
+  - path_regex: 'kaltashar/'
+    age: age1m2z62rwhkldycej2ljggv9zfgp79xzzhdvkv7z8ajfhkrepxyvxsr3pgea
+  - path_regex: 'telsha/'
+    age: age1pwl9yz4k4255a4h8qz7lafce8wxhsul0cnqwmr8528fqgujlfshshv3z3g
+  - age: age1pwl9yz4k4255a4h8qz7lafce8wxhsul0cnqwmr8528fqgujlfshshv3z3g
