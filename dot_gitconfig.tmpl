@@ -19,6 +19,7 @@
 	directory = D:\Source
 [core]
 	autocrlf = false
+	excludesfile = C:/Users/shika/.config/git/ignore
 [safe]
 	directory = *
 [windows]
@@ -37,4 +38,6 @@
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowed_signers
+[core]
+	excludesfile = {{ .chezmoi.homeDir }}/.config/git/ignore
 {{- end -}}
