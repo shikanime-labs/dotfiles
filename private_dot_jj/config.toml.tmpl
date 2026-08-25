@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "windows" }}
 #:schema https://docs.jj-vcs.dev/latest/config-schema.json
 
 [operation]
@@ -31,3 +32,4 @@ s = ["status"]
 n = ["new"]
 co = ["checkout"]
 br = ["branch"]
+{{- end }}

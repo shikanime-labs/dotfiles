@@ -1,0 +1,41 @@
+{{- if eq .chezmoi.os "darwin" }}
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Shikanime"
+email = "shikanime@shikanime.studio"
+
+[git]
+push-bookmarks = ["shikanime/*"]
+sign-on-push = false
+private-commits = "description(substring:\"[private]\")"
+
+[signing]
+behavior = "own"
+backend = "ssh"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDsUrtJU0kAg39S6Is4hOhiCIbZusi7/MHAvLYY0M7L3"
+
+[remotes.upstream]
+auto-track-bookmarks = "main"
+
+[ui]
+movement.edit = true
+
+[aliases]
+prune = ["abandon", "nulls()", "conflicts()"]
+restack = ["rebase", "--onto", "trunk()", "--source", "roots(trunk()..) & mutable()", "--simplify-parents"]
+stack = ["rebase", "--after", "trunk()", "--before", "closest_merge(@)"]
+stage = ["stack", "-r", "closest_merge(@)+:: ~ empty()"]
+fetch = ["git", "fetch", "--all-remotes"]
+switch = ["workspace", "add"]
+push = ["git", "push"]
+
+[revset-aliases]
+"closest_merge(to)" = "heads(::to & merges())"
+"nulls()" = "empty() & mutable()"
+
+templates.commit_trailers = """
+format_signed_off_by_trailer(self)
+++ if(!trailers.contains_key("Change-Id"), format_gerrit_change_id_trailer(self))
+"""
+{{- end }}

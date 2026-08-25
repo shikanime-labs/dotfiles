@@ -1,0 +1,23 @@
+model = "gpt-5.4-mini"
+model_reasoning_effort = "medium"
+
+[windows]
+sandbox = "elevated"
+
+[notice]
+hide_rate_limit_model_nudge = true
+{{- if eq .chezmoi.os "windows" }}
+
+# ishtar (Windows): trust local source trees so Codex can read them
+[projects.'d:\source\repos\github.com\shikanime']
+trust_level = "trusted"
+
+[projects.'d:\source\repos\github.com\shikanime\shikanime']
+trust_level = "trusted"
+
+[projects.'d:\source\repos\github.com\shikanime-studio\skills']
+trust_level = "trusted"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 1
+{{- end }}
