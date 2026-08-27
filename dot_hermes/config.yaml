@@ -1,14 +1,26 @@
 model:
-  default: openrouter/owl-alpha
-  provider: openrouter
-  base_url: https://openrouter.ai/api/v1
+  default: glm-5.3
+  provider: custom:aperture-openai
+  base_url: https://ai.taila659a.ts.net/v1
   api_mode: chat_completions
 providers: {}
 fallback_providers:
-  - provider: openrouter
-    model: openrouter/free
-    base_url: https://openrouter.ai/api/v1
+  - provider: custom:aperture-openai
+    model: tencent/hy3:free
+    base_url: https://ai.taila659a.ts.net/v1
     api_mode: chat_completions
+  - provider: custom:aperture-openai
+    model: poolside/laguna-s-2.1:free
+    base_url: https://ai.taila659a.ts.net/v1
+    api_mode: chat_completions
+  - provider: custom:aperture-openai
+    model: labs-leanstral-1-5
+    base_url: https://ai.taila659a.ts.net/v1
+    api_mode: chat_completions
+  - provider: custom:aperture-openai
+    model: stepfun/step-3.7-flash:free
+    base_url: https://ai.taila659a.ts.net/v1
+    api_mode: chat_compleations
 credential_pool_strategies: {}
 toolsets:
   - hermes-cli
