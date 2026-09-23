@@ -43,3 +43,11 @@ GitHub PRs:
 Secrets are encrypted with `sops` (age) and decrypted by chezmoi hooks at apply
 time. See `README.md` "Secrets (chezmoi + sops)". Never commit private key
 material (age key, SSH private keys, GPG private keys).
+
+## Environment
+
+This repository ships a `.envrc` for direnv. Run `direnv allow` once after
+cloning; direnv then loads the Nix flake dev shell automatically on every
+directory change (`.envrc` runs
+`use flake . --accept-flake-config --no-pure-eval`). Without direnv, enter
+the same shell manually with `nix develop`.
