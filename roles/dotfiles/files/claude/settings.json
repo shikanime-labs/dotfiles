@@ -1,0 +1,9 @@
+{
+  "theme": "auto",
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://inference.i.shikanime.studio/anthropic",
+    "ANTHROPIC_MODEL": "z-ai/glm-5.3",
+    "ANTHROPIC_SMALL_FAST_MODEL": "qwen/qwen3.8-flash"
+  },
+  "apiKeyHelper": "/Users/shikanimedeva/.claude/sks-api-key.sh"
+}

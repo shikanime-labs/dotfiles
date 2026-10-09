@@ -5,9 +5,9 @@ all:
         darwin:
           hosts:
             telsha:
-        linux:
-          hosts:
             kaltashar:
+        linux:
+          hosts: {}
         windows:
           hosts:
             ishtar:

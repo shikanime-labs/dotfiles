@@ -1,0 +1,29 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      hermes:
+        displayName: Hermes Agent
+        apiKeyEnv: HERMES_GATEWAY_API_KEY
+        api: openai-completions
+        baseURL: http://127.0.0.1:8642/v1
+        models:
+          - id: hermes-agent
+            name: Hermes Agent (full)
+      inference:
+        displayName: Inference
+        apiKeyEnv: INFERENCE_API_KEY
+        api: openai-completions
+        baseURL: https://inference.i.shikanime.studio/v1
+        models:
+          - id: z-ai/glm-5.3-flash
+            name: "Z.ai: GLM 5.3 Flash"
+            contextWindow: 1048576
+- id: agent-default-model
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: hermes
+    model: hermes-agent
