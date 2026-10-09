@@ -1,13 +1,20 @@
 <configuration version="52">
   <gui enabled="true" tls="false" debugging="false">
     <address>{{ syncthing_gui.address }}</address>
-    <user>{{ syncthing_gui.user }}</user>
-    <password>{{ syncthing_gui_password_hash | default(syncthing_gui.password_hash | default('')) }}</password>
     <apikey>{{ hermes_env.SYNCTHING_API_KEY | default('') }}</apikey>
     <theme>{{ syncthing_gui.theme }}</theme>
+    <authMode>{{ syncthing_gui.auth_mode | default('ldap') }}</authMode>
     <sessionCookieDurationS>{{ syncthing_gui.session_cookie_duration_s }}</sessionCookieDurationS>
     <sessionCookiePath>/</sessionCookiePath>
   </gui>
+  <ldap>
+    <address>{{ syncthing_ldap.address }}</address>
+    <bindDN>{{ syncthing_ldap.bind_dn }}</bindDN>
+    <transport>{{ syncthing_ldap.transport }}</transport>
+    <insecureSkipVerify>{{ syncthing_ldap.insecure_skip_verify | default(false) | string | lower }}</insecureSkipVerify>
+    <searchBaseDN>{{ syncthing_ldap.search_base_dn }}</searchBaseDN>
+    <searchFilter>{{ syncthing_ldap.search_filter }}</searchFilter>
+  </ldap>
   <options>
     <listenAddress>default</listenAddress>
     <allowDeleteFromRemote>false</allowDeleteFromRemote>
