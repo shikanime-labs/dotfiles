@@ -3,3 +3,46 @@
 # Provide them at runtime:  ansible-playbook --extra-vars @secrets.yaml
 # or via ansible-vault (inventory/group_vars/all/vault.yaml).
 hermes_env: {}
+
+syncthing_gui:
+  address: 127.0.0.1:8384
+  user: syncthing
+  theme: default
+  session_cookie_duration_s: 604800
+syncthing_devices:
+  kaltashar:
+    id: D2WRW6P-5ZJFMIC-DAF2LCD-4FJRE7J-3EDFFJ5-JD7GDFX-YUHB45P-VVT2QQ6
+    addresses: [dynamic, tcp://kaltashar.taila659a.ts.net:22000]
+  nishir:
+    id: FORKJBY-NKQUGQC-GAD6ISF-XRHOOYY-D5GYH26-WNHBS7E-K4JMTM6-354P4QO
+    addresses: [dynamic, tcp://nishir.taila659a.ts.net:22000, tcp://syncthing.i.shikanime.studio:22000]
+  ishtar:
+    id: HTR5WGC-KVK67K6-U3R3IKB-2KZZYMI-WKRR7P3-JMO6HPV-A3VNOEV-A6EN2QX
+    addresses: [dynamic, tcp://ishtar.taila659a.ts.net:22000]
+  telsha:
+    id: JH274AZ-B7BVN4N-IGDWADJ-6754ZJ6-F5WGZYU-DELNCIH-X6LLPNO-PONQUAV
+    addresses: [dynamic, tcp://telsha.taila659a.ts.net:22000]
+  mirash:
+    id: 2DDD6DU-VD5DL4B-R5A42WB-YYF6B2G-FYZOIH7-6SYXXCY-3SSAPBV-KZRFKQP
+    addresses: [dynamic, tcp://mirash.taila659a.ts.net:22000]
+syncthing_folders:
+  - id: 5uabk-5jlaz
+    label: Obsidian
+    path: ~/Sync/Obsidian
+    devices: [kaltashar, nishir, ishtar, telsha, mirash]
+  - id: cvhgq-accgc
+    label: Source
+    path: ~/Sync/Source
+    devices: [kaltashar, nishir, ishtar, telsha]
+  - id: pjyvz-kccia
+    label: Documents
+    path: ~/Sync/Documents
+    devices: [kaltashar, nishir, ishtar, telsha]
+  - id: qw9xi-g4ckd
+    label: Hermes Skills
+    path: ~/.hermes/skills
+    devices: [kaltashar, nishir, ishtar, telsha, mirash]
+  - id: z5xxv-jkpcs
+    label: Staging/Documents
+    path: ~/Sync/Staging/Documents
+    devices: [kaltashar, nishir, ishtar, telsha, mirash]
