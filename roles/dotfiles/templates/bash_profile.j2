@@ -1,0 +1,5 @@
+{% if ansible_facts['os_family'] == 'Darwin' %}
+{% if ansible_facts.architecture == 'arm64' %}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{% endif %}
+{% endif %}

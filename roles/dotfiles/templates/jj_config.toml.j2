@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" }}
+{% if ansible_facts['os_family'] == 'Darwin' %}
 #:schema https://docs.jj-vcs.dev/latest/config-schema.json
 
 [user]
@@ -43,4 +43,4 @@ templates.commit_trailers = """
 format_signed_off_by_trailer(self)
 ++ if(!trailers.contains_key("Change-Id"), format_gerrit_change_id_trailer(self))
 """
-{{- end }}
+{% endif %}

@@ -1,0 +1,18 @@
+---
+dotfiles_files:
+  - src: ssh_config
+    dest: ~/.ssh/config
+    mode: "0600"
+  - src: git-ignore
+    dest: ~/.config/git/ignore
+  - src: hermes_config.yaml
+    dest: ~/.hermes/config.yaml
+  - src: "soul-{{ hermes_soul_operator }}.md"
+    dest: ~/.hermes/SOUL.md
+
+dotfiles_templates:
+  - src: hermes_env.j2
+    dest: ~/.hermes/.env
+    mode: "0600"
+  - src: gitconfig.j2
+    dest: ~/.gitconfig

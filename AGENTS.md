@@ -1,15 +1,27 @@
 # Dotfiles
 
-Shikanime personal dotfiles, managed by chezmoi. (Note: this repo is NOT the
-Nix `home/`+`hosts/` project the old Stack Workflow section described — that
-text was removed.)
+Shikanime personal dotfiles, managed by Ansible. (Note: this repo is NOT the
+Nix `home/`+`hosts/` project — and the former chezmoi layout was removed in
+favor of the Ansible layout below.)
 
 ## Structure
 
-- `dot_*` / `private_dot_*` — chezmoi-managed dotfiles (ssh, jj, git, hermes…)
-- `.chezmoihooks/` — sops decrypt/re-encrypt hooks
-- `.chezmoiignore` — deploy-time excludes (state, OS junk, age private key)
-- `README.md` — quick start + the chezmoi+sops secrets workflow
+- `inventory/hosts.yaml` — workstations grouped by OS (darwin/linux/windows)
+- `group_vars/`, `host_vars/` — per-OS and per-host file lists and values
+- `roles/dotfiles/` — the single deployment role
+  - `files/` — verbatim dotfiles (ssh config, hermes config.yaml, souls)
+  - `templates/` — Jinja2 templates (env, gitconfig, jj, nix, shells)
+- `playbooks/dotfiles.yaml` — entry point: `ansible-playbook playbooks/dotfiles.yaml`
+
+## Deploy
+
+```sh
+ansible-playbook -i inventory/hosts.yaml playbooks/dotfiles.yaml
+```
+
+Secrets for `~/.hermes/.env` are supplied at runtime via
+`--extra-vars @secrets.yaml` (or an ansible-vault file) under the
+`hermes_env` mapping — never committed.
 
 ## Commit Style
 
@@ -18,7 +30,7 @@ text was removed.)
 
 ## PR Workflow (plain `gh pr`, NOT `gh stack`)
 
-The org removed `gh stack` / `ghstack` entirely. Land changes with plain
+The org removed `gh stack` / ghstack entirely. Land changes with plain
 GitHub PRs:
 
 - Branch off `main`: `feat/…`, `fix/…`, or `<owner>/<short-desc>` when a
@@ -40,9 +52,9 @@ GitHub PRs:
 
 ## Secrets
 
-Secrets are encrypted with `sops` (age) and decrypted by chezmoi hooks at apply
-time. See `README.md` "Secrets (chezmoi + sops)". Never commit private key
-material (age key, SSH private keys, GPG private keys).
+Never commit secret values or private key material (age key, SSH private
+keys, GPG private keys). `hermes_env` comes from runtime extra-vars or
+ansible-vault.
 
 ## Environment
 

@@ -1,0 +1,6 @@
+---
+dotfiles_files_extra:
+  - src: jj_config_windows.toml
+    dest: ~/AppData/Roaming/jj/config.toml
+
+dotfiles_templates_extra: []
