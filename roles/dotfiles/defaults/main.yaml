@@ -14,5 +14,8 @@ dotfiles_templates:
   - src: hermes_env.j2
     dest: ~/.hermes/.env
     mode: "0600"
+  - src: syncthing_config.xml.j2
+    dest: "{{ syncthing_config_path | default('~/Library/Application Support/Syncthing/config.xml') }}"
+    mode: "0600"
   - src: gitconfig.j2
     dest: ~/.gitconfig

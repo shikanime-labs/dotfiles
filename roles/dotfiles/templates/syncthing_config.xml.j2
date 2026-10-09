@@ -1,0 +1,61 @@
+<configuration version="52">
+  <gui enabled="true" tls="false" debugging="false">
+    <address>{{ syncthing_gui.address }}</address>
+    <user>{{ syncthing_gui.user }}</user>
+    <password>{{ syncthing_gui.password_hash | default('') }}</password>
+    <apikey>{{ hermes_env.SYNCTHING_API_KEY | default('') }}</apikey>
+    <theme>{{ syncthing_gui.theme }}</theme>
+    <sessionCookieDurationS>{{ syncthing_gui.session_cookie_duration_s }}</sessionCookieDurationS>
+    <sessionCookiePath>/</sessionCookiePath>
+  </gui>
+  <options>
+    <listenAddress>default</listenAddress>
+    <allowDeleteFromRemote>false</allowDeleteFromRemote>
+    <globalAnnounceEnabled>true</globalAnnounceEnabled>
+    <localAnnounceEnabled>true</localAnnounceEnabled>
+    <localAnnounceMCAddr>[ff12::8384]:21036</localAnnounceMCAddr>
+    <localAnnouncePort>21027</localAnnouncePort>
+    <relaysEnabled>true</relaysEnabled>
+    <relayReconnectIntervalM>10</relayReconnectIntervalM>
+    <reconnectionIntervalS>60</reconnectionIntervalS>
+    <autoUpgradeIntervalH>12</autoUpgradeIntervalH>
+    <startBrowser>true</startBrowser>
+    <natEnabled>true</natEnabled>
+    <natLeaseMinutes>60</natLeaseMinutes>
+    <natRenewalMinutes>30</natRenewalMinutes>
+    <natTimeoutSeconds>10</natTimeoutSeconds>
+    <urAccepted>-1</urAccepted>
+    <urUniqueID></urUniqueID>
+    <crashReportingEnabled>true</crashReportingEnabled>
+    <announceLANAddresses>true</announceLANAddresses>
+    <overwriteRemoteDeviceNamesOnConnect>false</overwriteRemoteDeviceNamesOnConnect>
+    <cacheIgnoredFiles>false</cacheIgnoredFiles>
+    <setLowPriority>true</setLowPriority>
+    <maxSendKbps>0</maxSendKbps>
+    <maxRecvKbps>0</maxRecvKbps>
+  </options>
+{% for name, dev in syncthing_devices.items() %}
+  <device id="{{ dev.id }}" name="{{ name }}" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
+{% for addr in dev.addresses %}
+    <address>{{ addr }}</address>
+{% endfor %}
+  </device>
+{% endfor %}
+{% for folder in syncthing_folders %}
+  <folder id="{{ folder.id }}" label="{{ folder.label }}" path="{{ folder.path }}" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
+    <filesystemType>basic</filesystemType>
+{% for name in folder.devices %}
+    <device id="{{ syncthing_devices[name].id }}" introducedBy="">
+      <encryptionPassword></encryptionPassword>
+    </device>
+{% endfor %}
+    <minDiskFree unit="%">1</minDiskFree>
+    <versioning>
+      <cleanupIntervalS>3600</cleanupIntervalS>
+      <fsPath></fsPath>
+      <fsType>basic</fsType>
+      <type>staggered</type>
+    </versioning>
+  </folder>
+{% endfor %}
+</configuration>
