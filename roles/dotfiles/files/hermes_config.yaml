@@ -133,10 +133,6 @@ compression:
   codex_gpt55_autoraise: true
 prompt_caching:
   cache_ttl: 5m
-openrouter:
-  response_cache: true
-  response_cache_ttl: 300
-  min_coding_score: 0.65
 bedrock:
   region: ""
   discovery:

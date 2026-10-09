@@ -8,7 +8,6 @@ GOOGLE_API_KEY={{ hermes_env.GOOGLE_API_KEY | default('') }}
 GITHUB_TOKEN={{ hermes_env.GITHUB_TOKEN | default('') }}
 DISCORD_HOME_CHANNEL={{ hermes_env.DISCORD_HOME_CHANNEL | default('') }}
 DISCORD_HOME_CHANNEL_THREAD_ID=
-OPENROUTER_API_KEY={{ hermes_env.OPENROUTER_API_KEY | default('') }}
 SKS_API_KEY={{ hermes_env.SKS_API_KEY | default('') }}
 {% if ansible_facts.os_family == 'Darwin' -%}
 # Hermes Agent browser tools — use the system Chrome/Chromium binary.
