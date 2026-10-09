@@ -74,4 +74,3 @@ mapping supplied at runtime (`--extra-vars @secrets.yaml`). Keys:
 - `GOOGLE_API_KEY`
 - `GITHUB_TOKEN`
 - `DISCORD_HOME_CHANNEL`
-- `OPENROUTER_API_KEY`
