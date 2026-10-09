@@ -1,0 +1,20 @@
+---
+- name: Install static dotfiles
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    backup: true
+  loop: "{{ dotfiles_files + (dotfiles_files_extra | default([])) }}"
+  loop_control:
+    label: "{{ item.dest }}"
+
+- name: Render dotfile templates
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode | default(omit) }}"
+    backup: true
+  loop: "{{ dotfiles_templates + (dotfiles_templates_extra | default([])) }}"
+  loop_control:
+    label: "{{ item.dest }}"

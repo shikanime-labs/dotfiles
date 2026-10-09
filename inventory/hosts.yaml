@@ -1,0 +1,15 @@
+all:
+  children:
+    workstations:
+      children:
+        darwin:
+          hosts:
+            telsha:
+        linux:
+          hosts:
+            kaltashar:
+        windows:
+          hosts:
+            ishtar:
+  vars:
+    ansible_user: shika

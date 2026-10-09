@@ -1,0 +1,5 @@
+---
+# Secrets for the hermes .env are not stored in this repo.
+# Provide them at runtime:  ansible-playbook --extra-vars @secrets.yaml
+# or via ansible-vault (inventory/group_vars/all/vault.yaml).
+hermes_env: {}

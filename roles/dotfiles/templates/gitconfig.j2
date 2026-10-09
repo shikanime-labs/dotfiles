@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "windows" -}}
+{% if ansible_facts['os_family'] == 'Windows' %}
 [user]
 	name = Shikanime Deva
 	email = 22115108+shikanime@users.noreply.github.com
@@ -26,18 +26,16 @@
 	appendAtomically = false
 [commit]
 	gpgsign = true
-{{- else -}}
+{% else %}
 # macOS / Linux — SSH commit signing
 [user]
 	name = William Phetsinorath
 	email = william.phetsinorath@shikanime.studio
-	signingkey = {{ .chezmoi.homeDir }}/.ssh/id_ed25519.pub
+	signingkey = {{ ansible_env.HOME }}/.ssh/id_ed25519.pub
 [commit]
 	gpgsign = true
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowed_signers
-[core]
-	excludesfile = {{ .chezmoi.homeDir }}/.config/git/ignore
-{{- end -}}
+	allowedSignersFile = {{ ansible_env.HOME }}/.ssh/allowed_signers
+{% endif %}

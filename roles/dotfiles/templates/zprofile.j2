@@ -1,11 +1,11 @@
-{{- if eq .chezmoi.os "darwin" }}
-{{- if eq .chezmoi.arch "arm64" }}
+{% if ansible_facts['os_family'] == 'Darwin' %}
+{% if ansible_facts.architecture == 'arm64' %}
 eval "$(/opt/homebrew/bin/brew shellenv)"
-{{- end }}
+{% endif %}
 
 # Hermes Agent — ensure ~/.local/bin is on PATH
 export PATH="$HOME/.local/bin:$PATH"
 
 # MacPorts PATH additions
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-{{- end }}
+{% endif %}

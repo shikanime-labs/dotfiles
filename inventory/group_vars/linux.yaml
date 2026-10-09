@@ -1,0 +1,6 @@
+---
+dotfiles_files_extra: []
+
+dotfiles_templates_extra:
+  - src: jj_config.toml.j2
+    dest: ~/.config/jj/config.toml

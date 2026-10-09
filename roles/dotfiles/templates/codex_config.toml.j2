@@ -6,7 +6,7 @@ sandbox = "elevated"
 
 [notice]
 hide_rate_limit_model_nudge = true
-{{- if eq .chezmoi.os "windows" }}
+{% if ansible_facts['os_family'] == 'Windows' %}
 
 # ishtar (Windows): trust local source trees so Codex can read them
 [projects.'d:\source\repos\github.com\shikanime']
@@ -20,4 +20,4 @@ trust_level = "trusted"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 1
-{{- end }}
+{% endif %}
