@@ -6,9 +6,16 @@ hermes_env: {}
 
 syncthing_gui:
   address: 127.0.0.1:8384
-  user: syncthing
   theme: default
   session_cookie_duration_s: 604800
+  auth_mode: ldap
+syncthing_ldap:
+  address: lldap-ldaps.taila659a.ts.net:6360
+  bind_dn: uid=%s,ou=people,dc=shikanime,dc=studio
+  transport: tls
+  insecure_skip_verify: false
+  search_base_dn: ou=people,dc=shikanime,dc=studio
+  search_filter: (&(uid=%s)(memberOf=cn=syncthing,ou=groups,dc=shikanime,dc=studio))
 syncthing_devices:
   kaltashar:
     id: D2WRW6P-5ZJFMIC-DAF2LCD-4FJRE7J-3EDFFJ5-JD7GDFX-YUHB45P-VVT2QQ6
