@@ -1,0 +1,133 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+- id: agent-default-model
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: inference
+    model: z-ai/glm-5.3-flash
+- id: ui-settings-account
+  name: "@deepseek-ai/dsh-client-ui-settings-account"
+  config:
+    version: 1
+    step: done
+    purpose: null
+    process: standard
+    completion: skipped
+    usage: compact
+    developerTools: false
+- id: ui-chat
+  name: "@deepseek-ai/dsh-client-ui-chat"
+  config:
+    transcriptView: detailed
+    performanceUsage: detailed
+    linkOpening: sidebar
+- id: ui-settings
+  name: "@deepseek-ai/dsh-client-ui-settings"
+  config:
+    enabled: true
+- id: agent-preset-registry
+  name: "@deepseek-ai/dsh-agent-preset-registry"
+  config:
+    default: standard
+    selectedDefault: cordis
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      inference:
+        displayName: Inference
+        apiKeyEnv: INFERENCE_API_KEY
+        api: openai-completions
+        baseURL: https://inference.i.shikanime.studio/v1
+        models:
+          - id: qwen/qwen3.8-flash
+            name: "Qwen: Qwen3.8 Flash"
+            contextWindow: 1048576
+          - id: z-ai/glm-5.3-flash
+            name: "Z.ai: GLM 5.3 Flash"
+            contextWindow: 1048576
+          - id: z-ai/glm-5.3
+            name: "Z.ai: GLM 5.3"
+            contextWindow: 1048576
+          - id: mistral/labs-leanstral-1-5
+            name: "Mistral: Leanstral 1.5"
+- id: llm-deepseek-account
+  name: "@deepseek-ai/dsh-llm-deepseek-account"
+  config:
+    models: []
+- id: llm-deepseek
+  name: "@deepseek-ai/dsh-llm-deepseek-api-key"
+  config:
+    baseURL: https://inference.i.shikanime.studio/anthropic
+    models: []
+- id: ui-conversation
+  name: "@deepseek-ai/dsh-client-ui-conversation"
+  config:
+    busyEnter: steer
+- id: permission
+  name: "@deepseek-ai/dsh-permission-presets"
+  config:
+    presets:
+      read-only:
+        sandbox: read-only
+        approval: ask
+      workspace-write:
+        sandbox: workspace-write
+        approval: ask
+      danger-full-access:
+        sandbox: danger-full-access
+        approval: never
+    defaultPreset: danger-full-access
+- id: session-log-deepseek
+  name: "@deepseek-ai/dsh-session-log-deepseek"
+  config:
+    enabled: false
+- id: subagent-model-selection-settings
+  name: "@deepseek-ai/dsh-tool-subagent/model-selection-settings"
+  config:
+    enabled: true
+    allowedModels:
+      - provider: inference
+        model: qwen/qwen3.8-flash
+      - provider: inference
+        model: z-ai/glm-5.3-flash
+      - provider: inference
+        model: z-ai/glm-5.3
+- id: skill-filesystem
+  disabled: false
+- id: github-tools
+  disabled: false
+- insert:
+    # Hermes `lsp.enabled` parity: definition/references/implementations/hover
+    # through local language servers.
+    - id: lsp
+      name: "@deepseek-ai/dsh-lsp"
+    - id: lsp-stdio
+      name: "@deepseek-ai/dsh-lsp-stdio"
+      config:
+        servers:
+          typescript:
+            command: typescript-language-server
+            args: ["--stdio"]
+            extensionToLanguage:
+              ".ts": typescript
+              ".tsx": typescriptreact
+              ".js": javascript
+              ".jsx": javascript
+              ".mjs": javascript
+              ".cjs": javascript
+          nix:
+            command: nixd
+            extensionToLanguage:
+              ".nix": nix
+    - id: tool-lsp
+      name: "@deepseek-ai/dsh-tool-lsp"
+    # Hermes `mcp_servers.aperture`.
+    - id: mcp-aperture
+      name: "@deepseek-ai/dsh-mcp-client"
+      config:
+        serverName: aperture
+        transport: streamable-http
+        url: https://ai.taila659a.ts.net/v1/mcp
+        failOnStartupError: false

@@ -2,7 +2,7 @@
   <gui enabled="true" tls="false" debugging="false">
     <address>{{ syncthing_gui.address }}</address>
     <user>{{ syncthing_gui.user }}</user>
-    <password>{{ syncthing_gui.password_hash | default('') }}</password>
+    <password>{{ syncthing_gui_password_hash | default(syncthing_gui.password_hash | default('')) }}</password>
     <apikey>{{ hermes_env.SYNCTHING_API_KEY | default('') }}</apikey>
     <theme>{{ syncthing_gui.theme }}</theme>
     <sessionCookieDurationS>{{ syncthing_gui.session_cookie_duration_s }}</sessionCookieDurationS>

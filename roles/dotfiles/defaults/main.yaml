@@ -1,5 +1,14 @@
 ---
 dotfiles_files:
+  - src: claude/settings.json
+    dest: ~/.claude/settings.json
+  - src: claude/sks-api-key.sh
+    dest: ~/.claude/sks-api-key.sh
+    mode: "0700"
+  - src: dsh/cordis-desktop.patch.yml
+    dest: ~/.dsh/profiles/desktop/cordis.patch.yml
+  - src: dsh/cordis-headless.patch.yml
+    dest: ~/.dsh/profiles/headless/cordis.patch.yml
   - src: ssh_config
     dest: ~/.ssh/config
     mode: "0600"
