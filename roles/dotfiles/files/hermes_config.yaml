@@ -1,14 +1,35 @@
 model:
-  default: openrouter/owl-alpha
-  provider: openrouter
-  base_url: https://openrouter.ai/api/v1
-  api_mode: chat_completions
-providers: {}
+  default: z-ai/glm-5.3
+  provider: custom:shikanime-anthropic
+  base_url: https://inference.i.shikanime.studio/anthropic
+providers:
+  shikanime-anthropic:
+    api: https://inference.i.shikanime.studio/anthropic
+    transport: anthropic_messages
+    key_env: SKS_API_KEY
+    session_affinity_header: x-sks-session-id
+    default_model: z-ai/glm-5.3
+    models:
+      - z-ai/glm-5.3
+      - z-ai/glm-5.3-flash
+      - qwen/qwen3.8-27b
+      - qwen/qwen3.8-flash
+  shikanime-openai:
+    api: https://inference.i.shikanime.studio/v1
+    transport: chat_completions
+    key_env: SKS_API_KEY
+    session_affinity_header: x-sks-session-id
+    default_model: qwen/qwen3.8-flash
+    models:
+      - qwen/qwen3.8-flash
+      - qwen/qwen3.8-27b
 fallback_providers:
-  - provider: openrouter
-    model: openrouter/free
-    base_url: https://openrouter.ai/api/v1
-    api_mode: chat_completions
+  - provider: custom:shikanime-anthropic
+    model: qwen/qwen3.8-flash
+    api_mode: anthropic_messages
+  - provider: custom:shikanime-anthropic
+    model: deepseek/deepseek-v4.1
+    api_mode: anthropic_messages
 credential_pool_strategies: {}
 toolsets:
   - hermes-cli
@@ -207,6 +228,12 @@ auxiliary:
     timeout: 600
     extra_body: {}
 display:
+  bell_on_complete: true
+  bell_on_prompt: true
+  busy_input_mode: steer
+  show_cost: true
+  show_reasoning: true
+  streaming: true
   compact: false
   personality: kawaii
   resume_display: full
@@ -260,6 +287,9 @@ dashboard:
   oauth:
     client_id: ""
     portal_url: ""
+    self_hosted:
+      client_id: hermes-agent
+      issuer: https://accounts.i.shikanime.studio
   basic_auth:
     username: ""
     password_hash: ""
@@ -322,13 +352,13 @@ human_delay:
   min_ms: 800
   max_ms: 2500
 context:
-  engine: compressor
+  engine: lcm
 memory:
   memory_enabled: true
   user_profile_enabled: true
   memory_char_limit: 2200
   user_char_limit: 1375
-  provider: ""
+  provider: honcho
 delegation:
   model: ""
   provider: ""
@@ -363,6 +393,47 @@ curator:
     enabled: true
     keep: 5
 honcho: {}
+plugins:
+  enabled:
+    - disk-cleanup
+    - hermes-lcm
+    - honcho
+    - memory-wiki
+    - ponytail
+    - security-guidance
+  entries:
+    hermes-lcm:
+      allow_tool_override: true
+    ponytail:
+      allow_tool_override: true
+moa:
+  default_preset: default
+  presets:
+    broad:
+      enabled: true
+      reference_models:
+        - provider: shikanime-openai
+          model: deepseek/deepseek-v4.1-flash
+        - provider: shikanime-anthropic
+          model: z-ai/glm-5.3
+        - provider: shikanime-openai
+          model: openai/gpt-6-luna
+      aggregator:
+        provider: shikanime-anthropic
+        model: z-ai/glm-5.3-flash
+    default:
+      enabled: true
+      fanout: user_turn
+      reference_models:
+        - provider: shikanime-anthropic
+          model: z-ai/glm-5.3
+        - provider: shikanime-openai
+          model: deepseek/deepseek-v4.1-flash
+        - provider: shikanime-openai
+          model: openai/gpt-6-luna
+      aggregator:
+        provider: shikanime-openai
+        model: openai/gpt-6-luna
 timezone: ""
 slack:
   require_mention: true
@@ -410,7 +481,11 @@ mattermost:
 matrix:
   require_mention: true
   free_response_rooms: ""
-  allowed_rooms: ""
+  allowed_rooms:
+    - "#automata:matrix.taila659a.ts.net"
+  allowed_users:
+    - "@admin:matrix.taila659a.ts.net"
+    - "@shikanime:matrix.taila659a.ts.net"
 approvals:
   mode: manual
   timeout: 60
@@ -485,7 +560,7 @@ streaming:
   cursor: " ▉"
   fresh_final_after_seconds: 60.0
 sessions:
-  auto_prune: false
+  auto_prune: true
   retention_days: 90
   vacuum_after_prune: true
   min_interval_hours: 24
