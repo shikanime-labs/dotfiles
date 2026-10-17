@@ -28,7 +28,7 @@ fallback_providers:
     model: qwen/qwen3.8-flash
     api_mode: anthropic_messages
   - provider: custom:shikanime-anthropic
-    model: deepseek/deepseek-v4.1-flash
+    model: deepseek/deepseek-flash-latest
     api_mode: anthropic_messages
 credential_pool_strategies: {}
 toolsets:
@@ -409,7 +409,7 @@ moa:
       enabled: true
       reference_models:
         - provider: shikanime-openai
-          model: deepseek/deepseek-v4.1-flash
+          model: deepseek/deepseek-flash-latest
         - provider: shikanime-anthropic
           model: z-ai/glm-5.3
         - provider: shikanime-openai
@@ -424,7 +424,7 @@ moa:
         - provider: shikanime-anthropic
           model: z-ai/glm-5.3
         - provider: shikanime-openai
-          model: deepseek/deepseek-v4.1-flash
+          model: deepseek/deepseek-flash-latest
         - provider: shikanime-openai
           model: openai/gpt-6-luna
       aggregator:
