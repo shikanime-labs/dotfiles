@@ -15,6 +15,6 @@ Keep commit messages short and descriptive. One commit per logical change.
 
 ## Code of Conduct
 
-This project adheres to the
-[Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating,
-you are expected to uphold this code.
+This project adheres to the Contributor Covenant Code of Conduct, served as an
+organization-wide default. By participating, you are expected to uphold this
+code.
