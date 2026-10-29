@@ -50,6 +50,12 @@
           - id: z-ai/glm-5.3
             name: "Z.ai: GLM 5.3"
             contextWindow: 1048576
+          - id: Qwen/Qwen3.6-35B-A3B-FP8
+            name: "Qwen: Qwen3.6 35B A3B FP8 (Hetzner)"
+            contextWindow: 262144
+          - id: Qwen3.8-27B
+            name: "Qwen: Qwen3.8 27B (Hetzner)"
+            contextWindow: 262144
 - id: llm-deepseek-account
   name: "@deepseek-ai/dsh-llm-deepseek-account"
   config:
