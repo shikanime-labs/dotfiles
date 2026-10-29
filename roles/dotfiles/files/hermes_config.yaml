@@ -23,6 +23,12 @@ providers:
     models:
       - qwen/qwen3.8-flash
       - qwen/qwen3.8-27b
+  shikanime-hetzner:
+    api: https://inference.i.shikanime.studio/v1
+    transport: chat_completions
+    key_env: SKS_API_KEY
+    session_affinity_header: x-sks-session-id
+    default_model: Qwen3.8-27B
 fallback_providers:
   - provider: custom:shikanime-anthropic
     model: qwen/qwen3.8-flash
