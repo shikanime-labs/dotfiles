@@ -49,6 +49,9 @@ GitHub PRs:
   git config gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
   ```
 - Close the PR deliberately after merge; do not rely on auto-close keywords.
+- Bot PRs: the reviewer takes the lead — the bot author never acts on
+  review comments, so apply the verdict at review time (merge clean PRs,
+  fix or close broken ones) instead of commenting and waiting.
 
 ## Secrets
 
